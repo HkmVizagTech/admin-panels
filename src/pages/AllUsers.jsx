@@ -27,7 +27,7 @@ const Navigate = useNavigate();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://folk-server-production.up.railway.app/api/whatsapp/users'); // replace with your actual endpoint
+        const res = await fetch('https://razor-pay-server-production.up.railway.app/book/users'); // replace with your actual endpoint
         const data = await res.json();
         if (!Array.isArray(data)) {
           throw new Error('Unexpected response format');

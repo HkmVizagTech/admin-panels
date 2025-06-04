@@ -34,7 +34,7 @@ import {
 } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon, AddIcon, CalendarIcon } from "@chakra-ui/icons"
 
-const API_BASE_URL = "http://localhost:5000" // Adjust this to your API URL
+const API_BASE_URL = "https://razor-pay-server-production.up.railway.app" // Adjust this to your API URL
 function GitaEvent() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)

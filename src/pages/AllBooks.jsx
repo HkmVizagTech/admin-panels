@@ -33,7 +33,7 @@ const AllBooks = () => {
     try {
       setIsLoading(true)
       setError(null)
-      const response = await fetch("http://localhost:2346/api/whatsapp/getAllBooks")
+      const response = await fetch("https://razor-pay-server-production.up.railway.app/book/getAllBooks")
       if (!response.ok) {
         throw new Error("Failed to fetch books")
       }
@@ -57,7 +57,7 @@ const AllBooks = () => {
 
     try {
       setDeletingId(id)
-      const response = await fetch(`http://localhost:2346/api/whatsapp/deleteBook/${id}`, {
+      const response = await fetch(`https://razor-pay-server-production.up.railway.app/book/deleteBook/${id}`, {
         method: "DELETE",
       })
 

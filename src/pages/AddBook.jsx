@@ -46,7 +46,7 @@ const AddBook = () => {
       setIsLoading(true)
       setError(null)
 
-      const response = await fetch("http://localhost:2346/api/whatsapp/addBook", {
+      const response = await fetch("https://razor-pay-server-production.up.railway.app/book/addBook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

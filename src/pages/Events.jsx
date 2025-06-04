@@ -24,7 +24,7 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch("https://folk-server-production.up.railway.app/api/whatsapp/events");
+        const res = await fetch("https://razor-pay-server-production.up.railway.app/book/events");
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Error fetching events");
         setEvents(data);

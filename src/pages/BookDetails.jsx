@@ -36,7 +36,7 @@ const BookDetails = () => {
     try {
       setIsLoading(true)
       setError(null)
-      const response = await fetch(`http://localhost:2346/api/whatsapp/getBook/${id}`)
+      const response = await fetch(`https://razor-pay-server-production.up.railway.app/book/getBook/${id}`)
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -65,7 +65,7 @@ const BookDetails = () => {
 
     try {
       setIsDeleting(true)
-      const response = await fetch(`http://localhost:2346/api/whatsapp/deleteBook/${id}`, {
+      const response = await fetch(`https://razor-pay-server-production.up.railway.app/book/deleteBook/${id}`, {
         method: "DELETE",
       })
 

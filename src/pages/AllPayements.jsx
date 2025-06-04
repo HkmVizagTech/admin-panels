@@ -25,7 +25,7 @@ const AllPayments = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const res = await fetch('http://localhost:5000/users'); // replace with your endpoint
+        const res = await fetch('https://razor-pay-server-production.up.railway.app/users'); // replace with your endpoint
         const data = await res.json();
 
         if (!Array.isArray(data)) {

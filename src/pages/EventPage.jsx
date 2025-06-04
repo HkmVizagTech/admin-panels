@@ -30,7 +30,7 @@ const EventDetail = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`https://folk-server-b25x.onrender.com/api/whatsapp/event/${id}`);
+        const res = await fetch(`https://razor-pay-server-production.up.railway.app/book/event/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Error fetching event");
         setEvent(data.event);
@@ -48,7 +48,7 @@ const EventDetail = () => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
 
     try {
-      const res = await fetch(`https://folk-server-production.up.railway.app/api/whatsapp/event/${id}`, {
+      const res = await fetch(`https://razor-pay-server-production.up.railway.app/book/event/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
