@@ -32,7 +32,7 @@ const Sidebar = () => {
           borderRadius="md"
           cursor="pointer"
         >
-          Home
+         Book-distribution
         </Box>
         <Box
           as={Link}
@@ -42,7 +42,7 @@ const Sidebar = () => {
           borderRadius="md"
           cursor="pointer"
         >
-          Profile
+         Gita-spark
         </Box>
 
         {/* Logout Button */}
