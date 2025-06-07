@@ -16,6 +16,9 @@ import {
   Badge,
   useToast,
   IconButton,
+  Flex,
+  Stack,
+  useBreakpointValue,
 } from "@chakra-ui/react"
 import { useParams, useNavigate, Link as RouterLink } from "react-router-dom"
 import { ArrowBackIcon, DeleteIcon } from "@chakra-ui/icons"
@@ -39,9 +42,7 @@ const BookDetails = () => {
       const response = await fetch(`https://razor-pay-server-production.up.railway.app/book/getBook/${id}`)
 
       if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error("Book not found")
-        }
+        if (response.status === 404) throw new Error("Book not found")
         throw new Error("Failed to fetch book")
       }
 
@@ -59,9 +60,7 @@ const BookDetails = () => {
   }, [id])
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this book?")) {
-      return
-    }
+    if (!window.confirm("Are you sure you want to delete this book?")) return
 
     try {
       setIsDeleting(true)
@@ -69,9 +68,7 @@ const BookDetails = () => {
         method: "DELETE",
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to delete book")
-      }
+      if (!response.ok) throw new Error("Failed to delete book")
 
       toast({
         title: "Book deleted successfully",
@@ -95,14 +92,14 @@ const BookDetails = () => {
 
   if (isLoading) {
     return (
-      <Box textAlign="center" py={10}>
-           <IconButton
-            icon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
-            aria-label="Go back"
-            variant="ghost"
-            mr={2}
-          />
+      <Box textAlign="center" py={10} px={4}>
+        <IconButton
+          icon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+          variant="ghost"
+          mb={4}
+        />
         <Spinner size="xl" color="blue.500" />
         <Text mt={4}>Loading book details...</Text>
       </Box>
@@ -111,43 +108,44 @@ const BookDetails = () => {
 
   if (error) {
     return (
-      <VStack spacing={4}>
-           <IconButton
-            icon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
-            aria-label="Go back"
-            variant="ghost"
-            mr={2}
-          />
-        <Alert status="error">
+      <VStack spacing={6} px={4} py={8}>
+        <IconButton
+          icon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+          variant="ghost"
+          alignSelf="flex-start"
+        />
+        <Alert status="error" width="full">
           <AlertIcon />
           {error}
         </Alert>
-        <HStack spacing={4}>
+        <Stack direction={{ base: "column", sm: "row" }} spacing={4}>
           <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />}>
             Back to All Books
           </Button>
           <Button onClick={fetchBook} colorScheme="blue">
             Try Again
           </Button>
-        </HStack>
+        </Stack>
       </VStack>
     )
   }
 
   return (
-    <Box>
-      
-      <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />} mb={6} variant="ghost">
-        Back to All Books
-      </Button>
+    <Box px={{ base: 4, md: 8 }} py={8}>
+      <Flex justify="space-between" align="center" mb={6} wrap="wrap">
+        <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />} variant="ghost" mb={{ base: 4, md: 0 }}>
+          Back to All Books
+        </Button>
+      </Flex>
 
       {book && (
-        <Card>
+        <Card w="full">
           <CardBody>
-            <VStack align="start" spacing={4}>
-              <HStack>
-                <Heading size="lg">{book.title}</Heading>
+            <VStack align="start" spacing={6}>
+              <HStack wrap="wrap">
+                <Heading size={{ base: "md", md: "lg" }}>{book.title}</Heading>
                 <Badge colorScheme="blue">Book</Badge>
               </HStack>
 
@@ -155,12 +153,12 @@ const BookDetails = () => {
                 <Text fontWeight="semibold" color="gray.600">
                   Book ID:
                 </Text>
-                <Text fontFamily="mono" fontSize="sm" color="gray.500">
+                <Text fontFamily="mono" fontSize="sm" color="gray.500" wordBreak="break-all">
                   {book._id}
                 </Text>
               </Box>
 
-              <HStack spacing={4} pt={4}>
+              <HStack spacing={4} pt={4} wrap="wrap">
                 <Button
                   colorScheme="red"
                   leftIcon={<DeleteIcon />}

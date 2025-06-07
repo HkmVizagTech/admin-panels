@@ -35,6 +35,7 @@ import {
 import { EditIcon, DeleteIcon, AddIcon, CalendarIcon } from "@chakra-ui/icons"
 
 const API_BASE_URL = "https://razor-pay-server-production.up.railway.app" // Adjust this to your API URL
+
 function GitaEvent() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
@@ -241,8 +242,13 @@ function GitaEvent() {
       <Box maxW="1200px" mx="auto" p={6}>
         <VStack spacing={6} align="stretch">
           {/* Header */}
-          <Flex justify="space-between" align="center">
-            <Heading size="xl" color="blue.600">
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            justify="space-between"
+            align={{ base: "flex-start", md: "center" }}
+            gap={4}
+          >
+            <Heading size="lg" color="blue.600" textAlign={{ base: "left", md: "inherit" }}>
               Event Management
             </Heading>
             <Button
@@ -252,6 +258,7 @@ function GitaEvent() {
                 resetForm()
                 onCreateOpen()
               }}
+              w={{ base: "full", md: "auto" }}
             >
               Create Event
             </Button>
@@ -273,7 +280,7 @@ function GitaEvent() {
               {events.map((event) => (
                 <Card key={event._id} variant="outline">
                   <CardHeader>
-                    <Flex justify="space-between" align="center">
+                    <Flex justify="space-between" align="center" wrap="wrap" gap={2}>
                       <VStack align="start" spacing={1}>
                         <Heading size="md">{event.name}</Heading>
                         <HStack>
@@ -283,7 +290,7 @@ function GitaEvent() {
                           </Text>
                         </HStack>
                       </VStack>
-                      <HStack>
+                      <Flex wrap="wrap" gap={2}>
                         <Button size="sm" variant="outline" onClick={() => fetchEvent(event._id)}>
                           View
                         </Button>
@@ -303,7 +310,7 @@ function GitaEvent() {
                           variant="outline"
                           onClick={() => deleteEvent(event._id)}
                         />
-                      </HStack>
+                      </Flex>
                     </Flex>
                   </CardHeader>
                   {event.linkBox && (
@@ -320,7 +327,7 @@ function GitaEvent() {
         </VStack>
 
         {/* Create Event Modal */}
-        <Modal isOpen={isCreateOpen} onClose={onCreateClose} size="lg">
+        <Modal isOpen={isCreateOpen} onClose={onCreateClose} size={{ base: "full", md: "lg" }}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Create New Event</ModalHeader>
@@ -333,6 +340,7 @@ function GitaEvent() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter event name"
+                    w="full"
                   />
                 </FormControl>
                 <FormControl isRequired>
@@ -341,6 +349,7 @@ function GitaEvent() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    w="full"
                   />
                 </FormControl>
                 <FormControl isRequired>
@@ -349,6 +358,7 @@ function GitaEvent() {
                     type="time"
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                    w="full"
                   />
                 </FormControl>
                 <FormControl>
@@ -358,6 +368,7 @@ function GitaEvent() {
                     onChange={(e) => setFormData({ ...formData, linkBox: e.target.value })}
                     placeholder="Enter event description or link"
                     rows={3}
+                    w="full"
                   />
                 </FormControl>
               </VStack>
@@ -378,7 +389,7 @@ function GitaEvent() {
         </Modal>
 
         {/* Edit Event Modal */}
-        <Modal isOpen={isEditOpen} onClose={onEditClose} size="lg">
+        <Modal isOpen={isEditOpen} onClose={onEditClose} size={{ base: "full", md: "lg" }}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Edit Event</ModalHeader>
@@ -391,6 +402,7 @@ function GitaEvent() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter event name"
+                    w="full"
                   />
                 </FormControl>
                 <FormControl isRequired>
@@ -399,6 +411,7 @@ function GitaEvent() {
                     type="date"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    w="full"
                   />
                 </FormControl>
                 <FormControl isRequired>
@@ -407,6 +420,7 @@ function GitaEvent() {
                     type="time"
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                    w="full"
                   />
                 </FormControl>
                 <FormControl>
@@ -416,6 +430,7 @@ function GitaEvent() {
                     onChange={(e) => setFormData({ ...formData, linkBox: e.target.value })}
                     placeholder="Enter event description or link"
                     rows={3}
+                    w="full"
                   />
                 </FormControl>
               </VStack>
@@ -436,47 +451,35 @@ function GitaEvent() {
         </Modal>
 
         {/* View Event Modal */}
-        <Modal isOpen={isViewOpen} onClose={onViewClose} size="lg">
+        <Modal isOpen={isViewOpen} onClose={onViewClose} size={{ base: "full", md: "md" }}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Event Details</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {selectedEvent && (
-                <VStack spacing={4} align="stretch">
-                  <Box>
-                    <Text fontWeight="bold" mb={2}>
-                      Event Name
-                    </Text>
-                    <Text>{selectedEvent.name}</Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="bold" mb={2}>
-                      Date
-                    </Text>
-                    <Text>{formatDate(selectedEvent.date)}</Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="bold" mb={2}>
-                      Time
-                    </Text>
-                    <Text>{selectedEvent.time}</Text>
-                  </Box>
+              {selectedEvent ? (
+                <>
+                  <Heading size="md" mb={2}>
+                    {selectedEvent.name}
+                  </Heading>
+                  <Text mb={2}>
+                    <strong>Date:</strong> {formatDate(selectedEvent.date)}
+                  </Text>
+                  <Text mb={2}>
+                    <strong>Time:</strong> {selectedEvent.time}
+                  </Text>
                   {selectedEvent.linkBox && (
-                    <Box>
-                      <Text fontWeight="bold" mb={2}>
-                        Description/Link
-                      </Text>
-                      <Text>{selectedEvent.linkBox}</Text>
-                    </Box>
+                    <Text>
+                      <strong>Description/Link:</strong> {selectedEvent.linkBox}
+                    </Text>
                   )}
-                </VStack>
+                </>
+              ) : (
+                <Text>No event details available.</Text>
               )}
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" onClick={onViewClose}>
-                Close
-              </Button>
+              <Button onClick={onViewClose}>Close</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
@@ -485,4 +488,4 @@ function GitaEvent() {
   )
 }
 
-export default GitaEvent;
+export default GitaEvent

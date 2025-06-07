@@ -1,6 +1,3 @@
-
-
-// import type React from "react"
 import { useState } from "react"
 import {
   Box,
@@ -16,6 +13,7 @@ import {
   Alert,
   AlertIcon,
   HStack,
+  Flex,
 } from "@chakra-ui/react"
 import { useNavigate, Link as RouterLink } from "react-router-dom"
 import { ArrowBackIcon } from "@chakra-ui/icons"
@@ -87,55 +85,71 @@ const AddBook = () => {
 
   return (
     <Layout>
-    <Box>
-      <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />} mb={6} variant="ghost">
-        Back to All Books
-      </Button>
+      <Box px={{ base: 4, md: 8 }} py={{ base: 6, md: 10 }}>
+        <Button as={RouterLink} to="/" leftIcon={<ArrowBackIcon />} mb={6} variant="ghost">
+          Back to All Books
+        </Button>
 
-      <Card maxW="md" mx="auto">
-        <CardBody>
-          <VStack spacing={6}>
-            <Heading size="lg" textAlign="center" color="gray.700">
-              Add New Book
-            </Heading>
+        <Flex justify="center">
+          <Card w="full" maxW={{ base: "100%", sm: "90%", md: "500px" }} boxShadow="lg">
+            <CardBody>
+              <VStack spacing={6}>
+                <Heading size="lg" textAlign="center" color="gray.700">
+                  Add New Book
+                </Heading>
 
-            <Box w="full">
-              <form onSubmit={handleSubmit}>
-                <VStack spacing={4}>
-                  <FormControl isRequired>
-                    <FormLabel>Book Title</FormLabel>
-                    <Input
-                      type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Enter book title"
-                      focusBorderColor="blue.500"
-                      disabled={isLoading}
-                    />
-                  </FormControl>
+                <Box w="full">
+                  <form onSubmit={handleSubmit}>
+                    <VStack spacing={4}>
+                      <FormControl isRequired>
+                        <FormLabel>Book Title</FormLabel>
+                        <Input
+                          type="text"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder="Enter book title"
+                          focusBorderColor="blue.500"
+                          disabled={isLoading}
+                        />
+                      </FormControl>
 
-                  <HStack spacing={4} w="full">
-                    <Button type="button" variant="outline" onClick={() => setTitle("")} flex="1" disabled={isLoading}>
-                      Clear
-                    </Button>
-                    <Button type="submit" colorScheme="blue" isLoading={isLoading} loadingText="Adding..." flex="1">
-                      Add Book
-                    </Button>
-                  </HStack>
-                </VStack>
-              </form>
-            </Box>
+                      <HStack spacing={4} w="full" flexWrap={{ base: "wrap", sm: "nowrap" }}>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setTitle("")}
+                          flex="1"
+                          disabled={isLoading}
+                          w={{ base: "100%", sm: "auto" }}
+                        >
+                          Clear
+                        </Button>
+                        <Button
+                          type="submit"
+                          colorScheme="blue"
+                          isLoading={isLoading}
+                          loadingText="Adding..."
+                          flex="1"
+                          w={{ base: "100%", sm: "auto" }}
+                        >
+                          Add Book
+                        </Button>
+                      </HStack>
+                    </VStack>
+                  </form>
+                </Box>
 
-            {error && (
-              <Alert status="error" borderRadius="md">
-                <AlertIcon />
-                {error}
-              </Alert>
-            )}
-          </VStack>
-        </CardBody>
-      </Card>
-    </Box>
+                {error && (
+                  <Alert status="error" borderRadius="md" w="full">
+                    <AlertIcon />
+                    {error}
+                  </Alert>
+                )}
+              </VStack>
+            </CardBody>
+          </Card>
+        </Flex>
+      </Box>
     </Layout>
   )
 }

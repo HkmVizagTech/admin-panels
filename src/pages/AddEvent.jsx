@@ -83,65 +83,66 @@ const AddEvent = () => {
 
   return (
     <Layout>
-    <Container maxW="container.sm" py={10}>
-      <Card variant="outline" boxShadow="md">
-        <CardHeader>
-          <Heading as="h1" size="lg" textAlign="center" mb={2}>
-            Gita Event Registration
-          </Heading>
-          <Text textAlign="center" color="gray.600">
-            Notify all Gita participants about a new event
-          </Text>
-        </CardHeader>
-        <Divider />
-        <CardBody>
-          <Box as="form" onSubmit={handleSubmit}>
-            <VStack spacing={6} align="stretch">
-              <FormControl isInvalid={!!errors.title} isRequired>
-                <FormLabel>Event Title</FormLabel>
-                <Input
-                  value={formData.title}
-                  onChange={(e) => handleChange("title", e.target.value)}
-                  placeholder="e.g. Gita Session on Mind Control"
-                />
-                <FormErrorMessage>{errors.title}</FormErrorMessage>
-              </FormControl>
+      <Container maxW="container.sm" py={{ base: 6, md: 10 }} px={{ base: 4, md: 6 }}>
+        <Card variant="outline" boxShadow="md" borderRadius="xl" p={{ base: 4, md: 6 }}>
+          <CardHeader textAlign="center" px={0}>
+            <Heading as="h1" fontSize={{ base: "2xl", md: "3xl" }} mb={2}>
+              Gita Event Registration
+            </Heading>
+            <Text fontSize={{ base: "sm", md: "md" }} color="gray.600">
+              Notify all Gita participants about a new event
+            </Text>
+          </CardHeader>
+          <Divider my={4} />
+          <CardBody px={0}>
+            <Box as="form" onSubmit={handleSubmit}>
+              <VStack spacing={6} align="stretch">
+                <FormControl isInvalid={!!errors.title} isRequired>
+                  <FormLabel>Event Title</FormLabel>
+                  <Input
+                    value={formData.title}
+                    onChange={(e) => handleChange("title", e.target.value)}
+                    placeholder="e.g. Gita Session on Mind Control"
+                  />
+                  <FormErrorMessage>{errors.title}</FormErrorMessage>
+                </FormControl>
 
-              <FormControl isInvalid={!!errors.eventDate} isRequired>
-                <FormLabel>Event Date & Time</FormLabel>
-                <Input
-                  type="datetime-local"
-                  value={formData.eventDate}
-                  onChange={(e) => handleChange("eventDate", e.target.value)}
-                />
-                <FormErrorMessage>{errors.eventDate}</FormErrorMessage>
-              </FormControl>
+                <FormControl isInvalid={!!errors.eventDate} isRequired>
+                  <FormLabel>Event Date & Time</FormLabel>
+                  <Input
+                    type="datetime-local"
+                    value={formData.eventDate}
+                    onChange={(e) => handleChange("eventDate", e.target.value)}
+                  />
+                  <FormErrorMessage>{errors.eventDate}</FormErrorMessage>
+                </FormControl>
 
-              <FormControl isInvalid={!!errors.link} isRequired>
-                <FormLabel>Meeting Link</FormLabel>
-                <Input
-                  value={formData.link}
-                  onChange={(e) => handleChange("link", e.target.value)}
-                  placeholder="e.g. https://zoom.us/j/xxxxx"
-                />
-                <FormErrorMessage>{errors.link}</FormErrorMessage>
-              </FormControl>
+                <FormControl isInvalid={!!errors.link} isRequired>
+                  <FormLabel>Meeting Link</FormLabel>
+                  <Input
+                    value={formData.link}
+                    onChange={(e) => handleChange("link", e.target.value)}
+                    placeholder="e.g. https://zoom.us/j/xxxxx"
+                  />
+                  <FormErrorMessage>{errors.link}</FormErrorMessage>
+                </FormControl>
 
-              <Button
-                mt={4}
-                colorScheme="teal"
-                type="submit"
-                isLoading={isSubmitting}
-                loadingText="Registering..."
-                width="full"
-              >
-                Register Event
-              </Button>
-            </VStack>
-          </Box>
-        </CardBody>
-      </Card>
-    </Container>
+                <Button
+                  mt={2}
+                  colorScheme="teal"
+                  type="submit"
+                  isLoading={isSubmitting}
+                  loadingText="Registering..."
+                  width="full"
+                  fontSize={{ base: "md", md: "lg" }}
+                >
+                  Register Event
+                </Button>
+              </VStack>
+            </Box>
+          </CardBody>
+        </Card>
+      </Container>
     </Layout>
   );
 };

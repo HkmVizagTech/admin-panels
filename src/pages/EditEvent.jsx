@@ -13,6 +13,8 @@ import {
   AlertIcon,
   useToast,
   IconButton,
+  VStack,
+  Flex,
 } from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -32,7 +34,6 @@ const EditEvent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Fetch current event data
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -41,7 +42,7 @@ const EditEvent = () => {
         if (!res.ok) throw new Error(data.message || 'Failed to fetch event');
         setFormData({
           title: data.event.title,
-          eventDate: new Date(data.event.eventDate).toISOString().substr(0, 10), // for input type="date"
+          eventDate: new Date(data.event.eventDate).toISOString().slice(0, 16), // ISO for datetime-local
           link: data.event.link,
           description: data.event.description || '',
         });
@@ -90,62 +91,87 @@ const EditEvent = () => {
     }
   };
 
-  if (loading) return <Spinner size="xl" color="teal.400" />;
+  if (loading) {
+    return (
+      <Flex justify="center" align="center" minH="60vh" py={4}>
+        <Spinner size="xl" color="teal.400" />
+      </Flex>
+    );
+  }
 
   if (error) {
     return (
-      <Alert status="error" my={4}>
-        <AlertIcon />
-        {error}
-      </Alert>
+      <Container maxW="container.md" py={6}>
+        <Alert status="error" borderRadius="md">
+          <AlertIcon />
+          {error}
+        </Alert>
+      </Container>
     );
   }
 
   return (
     <Layout>
-         <IconButton
-            icon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
-            aria-label="Go back"
-            variant="ghost"
-            mr={2}
-          />
-      <Container maxW="container.md" py={8}>
-        <Box borderWidth="1px" borderRadius="lg" p={6} boxShadow="md">
-          <Heading mb={6}>✏️ Edit Event</Heading>
+      <Container maxW="container.md" py={6} px={{ base: 4, md: 8 }}>
+        <IconButton
+          icon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+          variant="ghost"
+          mb={4}
+        />
+        <Box borderWidth="1px" borderRadius="lg" p={{ base: 4, md: 6 }} boxShadow="md">
+          <Heading size="lg" mb={6}>✏️ Edit Event</Heading>
           <form onSubmit={handleSubmit}>
-            <FormControl mb={4} isRequired>
-              <FormLabel>Title</FormLabel>
-              <Input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-              />
-            </FormControl>
+            <VStack spacing={4}>
+              <FormControl isRequired>
+                <FormLabel>Title</FormLabel>
+                <Input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                />
+              </FormControl>
 
-            <FormControl mb={4} isRequired>
-              <FormLabel>Event Date</FormLabel>
-              <Input
-                type="datetime-local"
-                name="eventDate"
-                value={formData.eventDate}
-                onChange={handleChange}
-              />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Event Date</FormLabel>
+                <Input
+                  type="datetime-local"
+                  name="eventDate"
+                  value={formData.eventDate}
+                  onChange={handleChange}
+                />
+              </FormControl>
 
-            <FormControl mb={4}>
-              <FormLabel>Event Link</FormLabel>
-              <Input
-                type="url"
-                name="link"
-                value={formData.link}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <Button colorScheme="teal" type="submit">
-              Save Changes
-            </Button>
+              <FormControl>
+                <FormLabel>Event Link</FormLabel>
+                <Input
+                  type="url"
+                  name="link"
+                  value={formData.link}
+                  onChange={handleChange}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Optional description..."
+                />
+              </FormControl>
+
+              <Button
+                colorScheme="teal"
+                type="submit"
+                width="full"
+              >
+                Save Changes
+              </Button>
+            </VStack>
           </form>
         </Box>
       </Container>

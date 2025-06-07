@@ -1,18 +1,30 @@
 // src/pages/Home.js
-import { Box, SimpleGrid, Text, Link as ChakraLink, IconButton } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text, Link as ChakraLink } from "@chakra-ui/react";
 import Layout from "../components/Layout";
-import { Link, Navigate } from "react-router-dom";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const Home = () => (
   <Layout>
-  
-    <Box mt="10" textAlign="center">
-      <Text fontSize="3xl" fontWeight="bold" mb="6">
+    <Box
+      mt={{ base: 8, md: 10 }}
+      px={{ base: 4, md: 8, lg: 16 }}
+      textAlign="center"
+      maxW="1200px"
+      mx="auto"
+    >
+      <Text
+        fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}
+        fontWeight="bold"
+        mb={{ base: 6, md: 10 }}
+      >
         Book Distribution Management
       </Text>
 
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6} px={4}>
+      <SimpleGrid
+        columns={{ base: 1, sm: 2, md: 3 }}
+        spacing={{ base: 4, sm: 6, md: 8 }}
+        px={{ base: 0, sm: 4, md: 0 }}
+      >
         <NavCard to="/add-event" label="Add Event" />
         <NavCard to="/event-list" label="Get Event" />
         <NavCard to="/users" label="Get Users" />
@@ -27,15 +39,20 @@ const NavCard = ({ to, label }) => (
   <ChakraLink
     as={Link}
     to={to}
-    p={6}
+    p={{ base: 6, md: 8 }}
     bg="gray.100"
     borderRadius="lg"
     boxShadow="md"
-    _hover={{ bg: "blue.100", textDecoration: "none", transform: "scale(1.02)" }}
+    _hover={{
+      bg: "blue.100",
+      textDecoration: "none",
+      transform: "scale(1.05)",
+      boxShadow: "lg",
+    }}
     transition="all 0.2s ease-in-out"
     textAlign="center"
     fontWeight="medium"
-    fontSize="lg"
+    fontSize={{ base: "lg", md: "xl" }}
   >
     {label}
   </ChakraLink>

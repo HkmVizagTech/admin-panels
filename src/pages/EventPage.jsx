@@ -12,14 +12,13 @@ import {
   useToast,
   HStack,
   IconButton,
+  Flex,
 } from '@chakra-ui/react';
 import Layout from "../components/Layout";
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-// import Layout from '../components/Layout';
 
 const EventDetail = () => {
-  //  const Navigate = useNavigate();
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -76,14 +75,22 @@ const EventDetail = () => {
     navigate(`/event/edit/${id}`);
   };
 
-  if (loading) return <Spinner size="xl" thickness="4px" color="teal.400" speed="0.65s" />;
+  if (loading) {
+    return (
+      <Flex justify="center" align="center" minH="60vh" py={4}>
+        <Spinner size="xl" thickness="4px" color="teal.400" speed="0.65s" />
+      </Flex>
+    );
+  }
 
   if (error) {
     return (
-      <Alert status="error" my={4}>
-        <AlertIcon />
-        {error}
-      </Alert>
+      <Container maxW="container.md" py={6}>
+        <Alert status="error" borderRadius="md">
+          <AlertIcon />
+          {error}
+        </Alert>
+      </Container>
     );
   }
 
@@ -91,27 +98,46 @@ const EventDetail = () => {
 
   return (
     <Layout>
-         <IconButton
-            icon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
-            aria-label="Go back"
-            variant="ghost"
-            mr={2}
-          />
-      <Container maxW="container.md" py={8}>
-        <Box borderWidth="1px" borderRadius="lg" p={6} boxShadow="md">
-          <Heading mb={4}>{event.title}</Heading>
-          <Text color="gray.600" mb={2}>
+      <Container maxW="container.md" py={6} px={{ base: 4, md: 8 }}>
+        <IconButton
+          icon={<ArrowBackIcon />}
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+          variant="ghost"
+          mb={4}
+        />
+        <Box
+          borderWidth="1px"
+          borderRadius="lg"
+          p={{ base: 4, md: 6 }}
+          boxShadow="md"
+        >
+          <Heading fontSize={{ base: "xl", md: "2xl" }} mb={4}>
+            {event.title}
+          </Heading>
+
+          <Text fontSize={{ base: "sm", md: "md" }} color="gray.600" mb={2}>
             🗓️ Date: {new Date(event.eventDate).toLocaleDateString()}
           </Text>
-          <Text color="gray.600" mb={4}>
-            🔗 Link: <ChakraLink color="blue.500" href={event.link} isExternal>{event.link}</ChakraLink>
-          </Text>
-          <Text color="gray.700" mb={6}>{event.description || "No description provided."}</Text>
 
-          <HStack spacing={4}>
-            <Button colorScheme="teal" onClick={handleUpdate}>Update</Button>
-            <Button colorScheme="red" onClick={handleDelete}>Delete</Button>
+          <Text fontSize={{ base: "sm", md: "md" }} color="gray.600" mb={4}>
+            🔗 Link:{" "}
+            <ChakraLink color="blue.500" href={event.link} isExternal wordBreak="break-all">
+              {event.link}
+            </ChakraLink>
+          </Text>
+
+          <Text fontSize={{ base: "sm", md: "md" }} color="gray.700" mb={6}>
+            {event.description || "No description provided."}
+          </Text>
+
+          <HStack spacing={4} flexWrap="wrap">
+            <Button colorScheme="teal" onClick={handleUpdate}>
+              Update
+            </Button>
+            <Button colorScheme="red" onClick={handleDelete}>
+              Delete
+            </Button>
           </HStack>
         </Box>
       </Container>

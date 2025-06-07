@@ -14,6 +14,7 @@ import {
   AlertIcon,
   Badge,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 
@@ -22,10 +23,12 @@ const AllPayments = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const res = await fetch('https://razor-pay-server-production.up.railway.app/users'); // replace with your endpoint
+        const res = await fetch('https://razor-pay-server-production.up.railway.app/users');
         const data = await res.json();
 
         if (!Array.isArray(data)) {
@@ -45,67 +48,83 @@ const AllPayments = () => {
 
   return (
     <Layout>
-    <Container maxW="full" py={8}>
-      <Heading size="lg" mb={4}>💳 Total Payments: {payments.length}</Heading>
+      <Container maxW="full" px={{ base: 4, md: 8 }} py={{ base: 6, md: 10 }}>
+        <Heading
+          size={{ base: "md", md: "lg" }}
+          mb={6}
+          textAlign={{ base: "center", md: "left" }}
+        >
+          💳 Total Payments: {payments.length}
+        </Heading>
 
-      {loading ? (
-        <Spinner size="xl" />
-      ) : error ? (
-        <Alert status="error" mb={4}>
-          <AlertIcon />
-          {error}
-        </Alert>
-      ) : (
-        <Box overflowX="auto">
-          <Table variant="striped" colorScheme="teal" size="sm">
-            <Thead>
-              <Tr>
-                <Th>#</Th>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>WhatsApp</Th>
-                <Th>Area</Th>
-                <Th>College</Th>
-                <Th>Gender</Th>
-                <Th>Day Scholar / Hostler</Th>
-                <Th>Amount</Th>
-                {/* <Th>Razorpay Order ID</Th> */}
-                <Th>Payment ID</Th>
-                {/* <Th>Signature</Th> */}
-                <Th>Status</Th>
-                <Th>Created At</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {payments.map((p, index) => (
-                <Tr key={p._id}>
-                  <Td>{index + 1}</Td>
-                  <Td>{p.name || '-'}</Td>
-                  <Td>{p.email || '-'}</Td>
-                  <Td>{p.whatsappNumber || '-'}</Td>
-                  <Td>{p.area || '-'}</Td>
-                  <Td>{p.collegeName || '-'}</Td>
-                  <Td>{p.gender || '-'}</Td>
-                  <Td>{p.dayScholarOrHostler || '-'}</Td>
-                  <Td>₹{p.amount || 0}</Td>
-                  {/* <Td>{p.razorpay_order_id || '-'}</Td> */}
-                  <Td>{p.razorpay_payment_id || '-'}</Td>
-                  {/* <Td>
-                    <Text maxW="200px" isTruncated>{p.razorpay_signature || '-'}</Text>
-                  </Td> */}
-                  <Td>
-                    <Badge colorScheme={p.paymentSuccess ? 'green' : 'red'}>
-                      {p.paymentSuccess ? 'Success' : 'Failed'}
-                    </Badge>
-                  </Td>
-                  <Td>{new Date(p.createdAt).toLocaleString()}</Td>
+        {loading ? (
+          <Box textAlign="center" py={10}>
+            <Spinner size="xl" />
+            <Text mt={4}>Loading payments...</Text>
+          </Box>
+        ) : error ? (
+          <Alert status="error" mb={4}>
+            <AlertIcon />
+            {error}
+          </Alert>
+        ) : (
+          <Box overflowX="auto" borderRadius="md" boxShadow="sm">
+            <Table
+              variant="striped"
+              colorScheme="teal"
+              size="sm"
+              minW="1000px"
+              sx={{
+                th: {
+                  position: "sticky",
+                  top: 0,
+                  bg: "gray.100",
+                  zIndex: 1,
+                },
+              }}
+            >
+              <Thead>
+                <Tr>
+                  <Th>#</Th>
+                  <Th>Name</Th>
+                  <Th>Email</Th>
+                  <Th>WhatsApp</Th>
+                  <Th>Area</Th>
+                  <Th>College</Th>
+                  <Th>Gender</Th>
+                  <Th>Scholar Type</Th>
+                  <Th>Amount</Th>
+                  <Th>Payment ID</Th>
+                  <Th>Status</Th>
+                  <Th>Created At</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
-      )}
-    </Container>
+              </Thead>
+              <Tbody>
+                {payments.map((p, index) => (
+                  <Tr key={p._id}>
+                    <Td>{index + 1}</Td>
+                    <Td>{p.name || '-'}</Td>
+                    <Td maxW="200px" isTruncated>{p.email || '-'}</Td>
+                    <Td>{p.whatsappNumber || '-'}</Td>
+                    <Td>{p.area || '-'}</Td>
+                    <Td>{p.collegeName || '-'}</Td>
+                    <Td>{p.gender || '-'}</Td>
+                    <Td>{p.dayScholarOrHostler || '-'}</Td>
+                    <Td>₹{p.amount || 0}</Td>
+                    <Td maxW="200px" isTruncated>{p.razorpay_payment_id || '-'}</Td>
+                    <Td>
+                      <Badge colorScheme={p.paymentSuccess ? 'green' : 'red'}>
+                        {p.paymentSuccess ? 'Success' : 'Failed'}
+                      </Badge>
+                    </Td>
+                    <Td whiteSpace="nowrap">{new Date(p.createdAt).toLocaleString()}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </Box>
+        )}
+      </Container>
     </Layout>
   );
 };
