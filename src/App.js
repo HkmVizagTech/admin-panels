@@ -15,6 +15,10 @@ import AllBooks from "./pages/AllBooks";
 import BookDetails from "./pages/BookDetails";
 import GitaEvent from "./pages/GitaEvent";
 import PrivateRoute from "./components/PrivateRoute";
+import EventList from "./pages/EventList";
+import Pass_Mangement from "./pages/Pass_Mangement";
+import EventCreationForm from "./pages/EventCreationForm";
+import EventsDashboard from "./pages/EventsDashboard";
 const App = () => {
   return (
     <ChakraProvider>
@@ -22,6 +26,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/pass-dash" element={<PrivateRoute><EventsDashboard/></PrivateRoute>} />
           <Route path='/add-event' element={<PrivateRoute><AddEvent/></PrivateRoute>} />
           <Route path='event-list' element={<PrivateRoute><Events/></PrivateRoute>}/>
           <Route path='/event/:id' element={<PrivateRoute><EventPage/></PrivateRoute>} />
@@ -33,6 +38,9 @@ const App = () => {
           <Route path='/getAllBooks' element={<PrivateRoute><AllBooks/></PrivateRoute>}/>
           <Route path='/book/:id' element={<PrivateRoute><BookDetails/></PrivateRoute>}/>
           <Route path='/GitaEvent' element={<PrivateRoute><GitaEvent/></PrivateRoute>}/>
+          <Route path='/pass' element={<PrivateRoute><EventList/></PrivateRoute>}/>
+          <Route path='/pass-man' element={<PrivateRoute><Pass_Mangement/></PrivateRoute>}/>
+          <Route path='/pass-creation' element={<PrivateRoute><EventCreationForm/></PrivateRoute>}/>
         </Routes>
       {/* </Router> */}
     </ChakraProvider>

@@ -44,7 +44,16 @@ const Sidebar = () => {
         >
          Gita-spark
         </Box>
-
+    <Box
+          as={Link}
+          to="/pass-man"
+          _hover={{ bg: "gray.700" }}
+          p="3"
+          borderRadius="md"
+          cursor="pointer"
+        >
+         Pass-Distibution
+        </Box>
         {/* Logout Button */}
         <Button
           onClick={handleLogout}
