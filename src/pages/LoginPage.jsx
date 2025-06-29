@@ -29,7 +29,7 @@ export default function LoginPage() {
     e.preventDefault();
     console.log("Login attempt:", { username, password, rememberMe });
     alert("Login attempt: " + JSON.stringify({ username, password, rememberMe }));
-     const res = await fetch("https://razor-pay-server-production.up.railway.app/login", {
+     const res = await fetch("https://razor-pay-server-389286764509.asia-south1.run.app/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),

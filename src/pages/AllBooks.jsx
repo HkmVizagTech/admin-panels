@@ -35,7 +35,7 @@ const AllBooks = () => {
     try {
       setIsLoading(true)
       setError(null)
-      const response = await fetch("https://razor-pay-server-production.up.railway.app/book/getAllBooks")
+      const response = await fetch("https://razor-pay-server-389286764509.asia-south1.run.app/book/getAllBooks")
       if (!response.ok) {
         throw new Error("Failed to fetch books")
       }
@@ -59,7 +59,7 @@ const AllBooks = () => {
 
     try {
       setDeletingId(id)
-      const response = await fetch(`https://razor-pay-server-production.up.railway.app/book/deleteBook/${id}`, {
+      const response = await fetch(`https://razor-pay-server-389286764509.asia-south1.run.app/book/deleteBook/${id}`, {
         method: "DELETE",
       })
 

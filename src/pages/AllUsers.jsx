@@ -32,7 +32,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('https://razor-pay-server-production.up.railway.app/book/users');
+        const res = await fetch('https://razor-pay-server-389286764509.asia-south1.run.app/book/users');
         const data = await res.json();
         if (!Array.isArray(data)) {
           throw new Error('Unexpected response format');

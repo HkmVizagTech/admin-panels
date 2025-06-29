@@ -50,7 +50,7 @@ const AddEvent = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("https://razor-pay-server-production.up.railway.app/book/registerEvent", {
+      const res = await fetch("https://razor-pay-server-389286764509.asia-south1.run.app/book/registerEvent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -44,7 +44,7 @@ const AddBook = () => {
       setIsLoading(true)
       setError(null)
 
-      const response = await fetch("https://razor-pay-server-production.up.railway.app/book/addBook", {
+      const response = await fetch("https://razor-pay-server-389286764509.asia-south1.run.app/book/addBook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

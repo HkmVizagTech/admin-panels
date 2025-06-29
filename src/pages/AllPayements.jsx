@@ -28,7 +28,7 @@ const AllPayments = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const res = await fetch('https://razor-pay-server-production.up.railway.app/users');
+        const res = await fetch('https://razor-pay-server-389286764509.asia-south1.run.app/users');
         const data = await res.json();
 
         if (!Array.isArray(data)) {

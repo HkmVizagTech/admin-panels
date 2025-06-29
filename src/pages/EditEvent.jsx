@@ -37,7 +37,7 @@ const EditEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`https://razor-pay-server-production.up.railway.app/book/event/${id}`);
+        const res = await fetch(`https://razor-pay-server-389286764509.asia-south1.run.app/book/event/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Failed to fetch event');
         setFormData({
@@ -65,7 +65,7 @@ const EditEvent = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`https://razor-pay-server-production.up.railway.app/book/event/${id}`, {
+      const res = await fetch(`https://razor-pay-server-389286764509.asia-south1.run.app/book/event/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
